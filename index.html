@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vitapharm prototype</title>
-<meta name="vitapharm-build" content="2026-09-29 22:01 UTC">
+<meta name="vitapharm-build" content="2026-10-03 12:47 UTC">
 <style>
 @font-face {
   font-family: 'Instrument Sans';
@@ -2282,12 +2282,18 @@ input::placeholder{color:#6E6B64}
 .vp-pro-img{aspect-ratio:4/5}
 .vp-svc-card{min-height:156px}
 .vp-dark-input::placeholder{color:#A8CBB7}
+.vp-field{width:100%;min-height:112px;padding:16px 18px;border:none;border-radius:0;background:#FFFDFA;font:400 16px/1.5 'Instrument Sans',sans-serif;color:#23221F;resize:vertical;outline:none}
+.vp-field:focus,.vp-field-wrap:focus-within{box-shadow:inset 0 0 0 1.5px #1F6B49}
+.vp-b button:focus-visible{outline:2px solid #1F6B49;outline-offset:3px}
+.vp-r-row{grid-template-columns:44px minmax(0,1fr) auto}
 .vp-edu{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-areas:"feat head" "feat list";grid-template-rows:auto 1fr;column-gap:clamp(40px,6vw,112px);row-gap:clamp(28px,3vw,44px);align-items:start}
 .vp-edu-head{grid-area:head}.vp-edu-feat{grid-area:feat}.vp-edu-list{grid-area:list}
 .vp-svc{container-type:inline-size}
 .vp-svc-meta{flex:0 0 auto;flex-direction:column;align-items:flex-end}
 @container (max-width:560px){.vp-svc-meta{flex-direction:row;align-items:baseline;flex-basis:100%}}
 @media (max-width:899px){
+.vp-r-row{grid-template-columns:36px minmax(0,1fr)}
+.vp-r-price{grid-column:2;grid-row:2;font-weight:600}
 .vp-svc-card{min-height:0}
 .vp-edu{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "feat" "list";grid-template-rows:auto}
 .vp-pro-img{aspect-ratio:4/3}
@@ -2386,6 +2392,7 @@ input::placeholder{color:#6E6B64}
     </sc-for>
     <div style="display:grid;gap:10px;margin-top:28px">
       <button onClick="{{ goQuiz }}" style="display:flex;justify-content:center;align-items:center;background:#1F6B49;color:#F8F4EE;border:none;border-radius:999px;height:52px;font-weight:600;font-size:16px;cursor:pointer" style-hover="opacity:.68">Take the free skin quiz</button>
+      <button onClick="{{ goBuild }}" style="display:flex;justify-content:center;align-items:center;background:#EFCF87;color:#23221F;border:none;border-radius:999px;height:52px;font-weight:600;font-size:16px;cursor:pointer" style-hover="background:#E6C170">Build my routine</button>
       <button onClick="{{ goAnalysis }}" style="display:flex;justify-content:center;align-items:center;background:#F8F4EE;color:#3A3935;border:none;border-radius:999px;height:52px;font-weight:600;font-size:16px;cursor:pointer" style-hover="opacity:.68">Book a skin analysis</button>
     </div>
   </div>
@@ -2511,6 +2518,7 @@ input::placeholder{color:#6E6B64}
       <div style="max-width:620px;margin:0 auto clamp(44px,5vw,80px);text-align:center;display:flex;flex-direction:column;align-items:center;gap:clamp(14px,1.6vw,20px)">
         <h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(38px,4.4vw,64px);line-height:1;letter-spacing:-.015em;color:#1F6B49;text-wrap:balance">Want us to make choosing easier?</h2>
         <p style="margin:0;max-width:46ch;color:#3A3935;font-size:clamp(15px,1.15vw,17px);line-height:1.55;text-wrap:pretty">Tell us your skin type, concern and budget. We will show you a complete routine. Shown here for combination skin with dark marks.</p>
+        <button onClick="{{ goBuild }}" style="margin-top:8px;display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:999px;font-weight:600;cursor:pointer;white-space:nowrap;background:#1F6B49;color:#FFFDFA;padding:0 26px;height:52px;font-size:16px" style-hover="background:#174F36">Build my routine</button>
       </div>
       <div class="vp-tiers">
         <sc-for list="{{ homeTiers }}" as="t" hint-placeholder-count="3">
@@ -2976,7 +2984,7 @@ input::placeholder{color:#6E6B64}
       </div>
       <div style="margin-top:clamp(56px,7vw,104px);background:#EFCF87;padding:clamp(28px,4vw,56px) clamp(24px,4vw,64px);display:flex;flex-wrap:wrap;gap:16px 32px;justify-content:space-between;align-items:center">
         <span style="font-weight:500;letter-spacing:-.03em;font-size:clamp(22px,2.2vw,32px);line-height:1.15;color:#23221F;max-width:22ch">Too many options? Let us build a routine for you.</span>
-        <button onClick="{{ goRoutine }}" style="display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:999px;font-weight:600;cursor:pointer;white-space:nowrap;background:#1F6B49;color:#FFFDFA;padding:0 24px;height:50px;font-size:15px" style-hover="background:#174F36">Build my routine</button>
+        <button onClick="{{ goBuild }}" style="display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:999px;font-weight:600;cursor:pointer;white-space:nowrap;background:#1F6B49;color:#FFFDFA;padding:0 24px;height:50px;font-size:15px" style-hover="background:#174F36">Build my routine</button>
       </div>
     </div>
   </section>
@@ -3038,6 +3046,155 @@ input::placeholder{color:#6E6B64}
     </div>
   </section>
 </sc-if>
+<!-- ================= BUILD MY ROUTINE ================= -->
+<sc-if value="{{ isBuild }}" hint-placeholder-val="{{ false }}">
+  <sc-if value="{{ bAsking }}" hint-placeholder-val="{{ true }}">
+  <section class="vp-b" data-screen-label="Build my routine" style="background:#F8F4EE;min-height:calc(100vh - 72px);padding-left:clamp(20px,5vw,72px);padding-right:clamp(20px,5vw,72px);padding-top:clamp(28px,4vw,56px);padding-bottom:clamp(72px,9vw,128px)">
+    <div style="max-width:760px;margin:0 auto">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px">
+        <button onClick="{{ bBack }}" style="border:none;background:none;padding:0;color:#3A3935;font-size:14px;cursor:pointer;min-height:44px" style-hover="color:#23221F">{{ bBackLabel }}</button>
+        <span style="font-size:14px;font-weight:600;color:#1F6B49">Build my routine</span>
+      </div>
+      <div style="height:3px;background:rgba(35,34,31,.1);border-radius:999px;overflow:hidden;margin-bottom:clamp(36px,6vw,72px)"><div style="height:100%;background:#1F6B49;border-radius:999px;transition:width .3s;width:{{ bProgress }}"></div></div>
+      <div style="font-size:14px;font-weight:600;color:#1F6B49;margin-bottom:14px">{{ bCount }}</div>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(28px,3.4vw,44px)">
+        <sc-if value="{{ bNotSkinRes }}"><h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;letter-spacing:-.035em;color:#23221F;font-size:clamp(30px,4.2vw,50px);line-height:1.06;text-wrap:balance">{{ bTitle }}</h1></sc-if>
+        <sc-if value="{{ bIsSkinRes }}"><h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;letter-spacing:-.035em;color:#23221F;font-size:clamp(34px,4.6vw,56px);line-height:1.04;text-wrap:balance">Your skin type is most likely <span style="font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:-.01em;color:#1F6B49">{{ bSugLabel }}</span>.</h1></sc-if>
+        <sc-if value="{{ bHasHelp }}"><p style="margin:0;color:#3A3935;font-size:16px;line-height:1.5;max-width:52ch">{{ bHelp }}</p></sc-if>
+      </div>
+
+      <sc-if value="{{ bIsSingle }}">
+        <div style="display:grid;gap:8px">
+          <sc-for list="{{ bOpts }}" as="o" hint-placeholder-count="4">
+            <button onClick="{{ o.onClick }}" aria-pressed="{{ o.pressed }}" style="text-align:left;padding:14px 24px;min-height:64px;font-size:17px;font-weight:500;line-height:1.35;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:none;background:{{ o.bg }};color:{{ o.fg }}" style-hover="box-shadow:inset 0 0 0 1.5px #1F6B49">{{ o.label }}<span aria-hidden="true" style="flex:none;font-size:16px;font-weight:700;opacity:{{ o.tick }}">✓</span></button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ bShowReact }}">
+          <div style="display:grid;gap:10px;margin-top:24px">
+            <label for="vp-b-react" style="font-size:13px;font-weight:600;color:#6E6B64">Which product or ingredient?</label>
+            <textarea id="vp-b-react" class="vp-field" rows="3" value="{{ bReactText }}" onChange="{{ bOnReact }}" placeholder="For example: salicylic acid, or a product name"></textarea>
+            <p style="margin:0;font-size:14px;color:#6E6B64">We will leave out products that match what you write here.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ bShowSugNote }}">
+          <div style="margin-top:20px;background:#F7E9C6;padding:16px 20px;font-size:15px;color:#23221F">From your answers, your skin looks {{ bSugLower }}. We will use that for your routine.</div>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ bIsMulti }}">
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ bConcernOpts }}" as="o" hint-placeholder-count="12">
+            <button onClick="{{ o.onClick }}" aria-pressed="{{ o.pressed }}" style="padding:0 20px;min-height:48px;border-radius:999px;font-size:15px;font-weight:600;cursor:pointer;border:none;background:{{ o.bg }};color:{{ o.fg }}" style-hover="box-shadow:inset 0 0 0 1.5px #1F6B49">{{ o.label }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ bIsText }}">
+        <div style="display:grid;gap:10px">
+          <sc-if value="{{ bShowCurrentBox }}">
+            <label for="vp-b-current" style="font-size:13px;font-weight:600;color:#6E6B64">Products you use now</label>
+            <textarea id="vp-b-current" class="vp-field" rows="4" value="{{ bCurrent }}" onChange="{{ bOnCurrent }}" placeholder="For example: Simple Refreshing Wash, a moisturiser from the pharmacy"></textarea>
+          </sc-if>
+          <button onClick="{{ bToggleNone }}" aria-pressed="{{ bNonePressed }}" style="text-align:left;padding:14px 24px;min-height:64px;font-size:17px;font-weight:500;line-height:1.35;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;border:none;margin-top:6px;background:{{ bNoneBg }};color:{{ bNoneFg }}" style-hover="box-shadow:inset 0 0 0 1.5px #1F6B49">I don’t currently use anything<span aria-hidden="true" style="flex:none;font-size:16px;font-weight:700;opacity:{{ bNoneTick }}">✓</span></button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ bIsBudget }}">
+        <div style="display:grid;gap:10px">
+          <label for="vp-b-budget" style="font-size:13px;font-weight:600;color:#6E6B64">Your budget</label>
+          <div class="vp-field-wrap" style="display:flex;align-items:center;gap:12px;background:#FFFDFA;height:64px;padding:0 20px;max-width:360px">
+            <span style="font-weight:600;font-size:18px;color:#6E6B64">KES</span>
+            <input id="vp-b-budget" inputmode="numeric" autocomplete="off" value="{{ bBudgetStr }}" onChange="{{ bOnBudget }}" placeholder="4,000" style="flex:1;min-width:0;border:none;background:none;outline:none;font:500 22px 'Instrument Sans',sans-serif;color:#23221F">
+          </div>
+          <p style="margin:4px 0 0;font-size:16px;color:#3A3935">An estimate is fine.</p>
+          <p style="margin:0;font-size:14px;color:#6E6B64;max-width:52ch">We use this as an approximate budget. Recommendations can fall about KES 500 below or above it.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ bIsSkinRes }}">
+        <div style="font-size:13px;font-weight:600;color:#6E6B64;margin-bottom:10px">Not quite right? Choose the type that fits better.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ bSugOpts }}" as="o" hint-placeholder-count="4">
+            <button onClick="{{ o.onClick }}" aria-pressed="{{ o.pressed }}" style="padding:0 20px;min-height:48px;border-radius:999px;font-size:15px;font-weight:600;cursor:pointer;border:none;background:{{ o.bg }};color:{{ o.fg }}" style-hover="box-shadow:inset 0 0 0 1.5px #1F6B49">{{ o.label }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin-top:clamp(32px,4vw,48px)">
+        <button onClick="{{ bNext }}" aria-disabled="{{ bNextDisabled }}" style="display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:999px;font-weight:600;cursor:pointer;white-space:nowrap;padding:0 28px;height:54px;font-size:16px;color:#FFFDFA;background:{{ bNextBg }};cursor:{{ bNextCursor }}" style-hover="opacity:.92">{{ bNextLabel }}</button>
+        <sc-if value="{{ bHasAlt }}"><button onClick="{{ bAlt }}" style="background:none;border:none;padding:4px 0;color:#1F6B49;font-weight:600;font-size:14px;cursor:pointer" style-hover="text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px">{{ bAltLabel }}</button></sc-if>
+      </div>
+      <sc-if value="{{ bShowHint }}"><p style="margin:12px 0 0;font-size:14px;color:#6E6B64">{{ bHint }}</p></sc-if>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ bIsResult }}" hint-placeholder-val="{{ false }}">
+  <section class="vp-b" data-screen-label="Your routine" style="background:#F8F4EE;padding-left:clamp(20px,5vw,72px);padding-right:clamp(20px,5vw,72px);padding-top:clamp(28px,4vw,56px);padding-bottom:clamp(48px,6vw,88px)">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:clamp(20px,3vw,40px)">
+        <button onClick="{{ bBack }}" style="border:none;background:none;padding:0;color:#3A3935;font-size:14px;cursor:pointer;min-height:44px" style-hover="color:#23221F">{{ bBackLabel }}</button>
+        <span style="font-size:14px;font-weight:600;color:#1F6B49">Build my routine</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:clamp(14px,1.6vw,20px);max-width:780px">
+        <div style="font-size:14px;font-weight:600;color:#1F6B49">Your routine</div>
+        <h1 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;letter-spacing:-.035em;color:#23221F;font-size:clamp(36px,5vw,66px);line-height:1;letter-spacing:-.04em;text-wrap:balance">{{ brHeadline }}</h1>
+        <p style="margin:0;font-size:clamp(17px,1.3vw,19px);line-height:1.5;color:#3A3935;max-width:52ch">{{ brSummary }}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+          <sc-for list="{{ brChips }}" as="c" hint-placeholder-count="3"><span style="padding:8px 14px;border-radius:999px;background:#FFFDFA;color:#23221F;font-size:14px;font-weight:500">{{ c }}</span></sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="vp-b" style="background:#FFFDFA;padding-left:clamp(20px,5vw,72px);padding-right:clamp(20px,5vw,72px);padding-top:clamp(56px,7vw,104px);padding-bottom:clamp(72px,9vw,128px)">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,5vw,88px);align-items:start">
+      <div style="min-width:0">
+        <h2 style="margin:0;font-family:'Instrument Sans',sans-serif;font-weight:500;letter-spacing:-.035em;color:#23221F;font-size:clamp(26px,2.6vw,36px);line-height:1.08;margin-bottom:8px">Use them in this order</h2>
+        <p style="margin:0 0 clamp(28px,3vw,40px);font-size:15px;color:#6E6B64">Numbered in the order they go on your skin.</p>
+        <div style="display:grid;gap:clamp(26px,2.8vw,36px)">
+          <sc-for list="{{ brItems }}" as="p" hint-placeholder-count="3">
+            <div class="vp-r-row" style="display:grid;gap:6px 16px;align-items:baseline">
+              <span style="font-family:'Instrument Serif',serif;font-weight:400;font-size:32px;line-height:1;color:#1F6B49">{{ p.n }}</span>
+              <div style="min-width:0;display:flex;flex-direction:column;gap:4px">
+                <div style="font-size:13px;font-weight:600;color:#1F6B49">{{ p.stepLabel }} <span style="font-weight:400;color:#6E6B64">· {{ p.when }}</span></div>
+                <div style="font-weight:500;font-size:clamp(18px,1.6vw,22px);line-height:1.2;letter-spacing:-.02em;color:#23221F">{{ p.name }}</div>
+                <p style="margin:0;font-size:15px;line-height:1.5;color:#3A3935;max-width:52ch">{{ p.reason }}</p>
+                <sc-if value="{{ p.kept }}"><span style="align-self:flex-start;margin-top:6px;padding:4px 10px;background:#F7E9C6;color:#23221F;font-size:13px;font-weight:600">You already use this</span></sc-if>
+              </div>
+              <div class="vp-r-price" style="font-size:15px;color:#3A3935;white-space:nowrap">{{ p.priceLabel }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ brHasNotes }}">
+          <div style="margin-top:clamp(36px,4vw,56px);background:#F7E9C6;padding:clamp(20px,2.6vw,32px);display:grid;gap:10px">
+            <div style="font-size:14px;font-weight:600;color:#23221F">Good to know</div>
+            <sc-for list="{{ brNotes }}" as="t" hint-placeholder-count="2"><p style="margin:0;font-size:15px;line-height:1.5;color:#23221F">{{ t }}</p></sc-for>
+          </div>
+        </sc-if>
+      </div>
+      <div style="position:sticky;top:96px;background:#1F6B49;color:#FFFDFA;padding:clamp(24px,3vw,40px);display:grid;gap:18px">
+        <div style="display:grid;gap:8px">
+          <div style="font-size:13px;font-weight:600;color:#D3E6DA">Morning</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:15px;color:#FFFDFA"><sc-for list="{{ brAm }}" as="w" hint-placeholder-count="3"><span>{{ w }}</span></sc-for></div>
+          <div style="font-size:13px;font-weight:600;color:#D3E6DA;margin-top:10px">Evening</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px 16px;font-size:15px;color:#FFFDFA"><sc-for list="{{ brPm }}" as="w" hint-placeholder-count="2"><span>{{ w }}</span></sc-for></div>
+        </div>
+        <div style="padding-top:12px;display:grid;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap"><span style="color:#D3E6DA;font-size:15px">Routine total</span><span style="font-weight:500;letter-spacing:-.03em;font-size:32px;color:#FFFDFA">{{ brTotalLabel }}</span></div>
+          <sc-if value="{{ brHasBudgetMsg }}"><p style="margin:4px 0 0;font-size:15px;line-height:1.5;color:#FFFDFA">{{ brBudget1 }}</p></sc-if>
+          <sc-if value="{{ brHasBudget2 }}"><p style="margin:0;font-size:14px;line-height:1.5;color:#D3E6DA">{{ brBudget2 }}</p></sc-if>
+        </div>
+        <button onClick="{{ brAdd }}" style="display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:999px;font-weight:600;cursor:pointer;white-space:nowrap;width:100%;background:#EFCF87;color:#23221F;height:54px;font-size:16px" style-hover="background:#E6C170">Add routine to cart</button>
+        <button onClick="{{ goClinic }}" style="display:inline-flex;align-items:center;justify-content:center;border:none;border-radius:999px;font-weight:600;cursor:pointer;white-space:nowrap;width:100%;background:rgba(255,253,250,.12);color:#FFFDFA;height:50px;font-size:15px" style-hover="background:rgba(255,253,250,.2)">Book a consultation</button>
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px 28px">
+          <button onClick="{{ bChange }}" style="background:none;border:none;padding:6px 0;color:#FFFDFA;font-weight:600;font-size:14px;cursor:pointer" style-hover="text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px">Change my answers</button>
+          <button onClick="{{ bRestart }}" style="background:none;border:none;padding:6px 0;color:#FFFDFA;font-weight:600;font-size:14px;cursor:pointer" style-hover="text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px">Start again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+</sc-if>
 </main>
 
 <!-- FOOTER -->
@@ -3081,6 +3238,7 @@ input::placeholder{color:#6E6B64}
 <script type="text/x-dc" data-dc-script data-props="{&quot;showPhotos&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;startPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;new&quot;,&quot;quiz&quot;,&quot;concern&quot;,&quot;routine&quot;,&quot;shop&quot;,&quot;pro&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
 class Component extends DCLogic {
   state = {
+    b: null,
     page: this.props.startPage || 'home', nav: '', concern: 'acne',
     mobile: typeof window !== 'undefined' && window.innerWidth < 900,
     menuOpen: false, q: '', cart: 0, toast: '',
@@ -3161,6 +3319,287 @@ class Component extends DCLogic {
       const on = v === current;
       return { label: v, onClick: () => onPick(v), bg: on ? '#1F6B49' : off, fg: on ? '#FFFDFA' : '#23221F', bd: 'transparent' };
     });
+  }
+
+  // ---------------------------------------------------------------- Build My Routine
+  // Product catalogue for the routine builder. To add a product, add one object:
+  //   id          unique key
+  //   name, brand display name and brand
+  //   price       exact price in KES
+  //   step        'cleanser' | 'moisturiser' | 'sunscreen' (the routine slot it fills)
+  //   skin        skin types it suits: 'dry' | 'oily' | 'combination' | 'normal'
+  //   concerns    concern ids it helps with (see bConcerns below)
+  //   gentle      true if it suits reactive or sensitive skin
+  //   ingredients notable actives, used to avoid things a customer reacted to
+  //   keys        lower-case phrases that identify the product in free text
+  //   brandKeys   lower-case phrases that identify the brand in free text
+  //   reason      default one-line reason shown with the recommendation
+  //   reasonFor   optional reasons keyed by concern id or skin type
+  routineProducts() {
+    return [
+      { id: 'simple-wash', name: 'Simple Refreshing Wash', brand: 'Simple', price: 1200, step: 'cleanser', skin: ['dry', 'oily', 'combination', 'normal'], concerns: ['basic', 'sensitivity'], gentle: true, ingredients: [], keys: ['simple refreshing', 'refreshing wash', 'simple wash', 'simple face wash'], brandKeys: [],
+        reason: 'A gentle, soap-free wash that cleans without stripping. An easy place to start.',
+        reasonFor: { sensitivity: 'Gentle and soap-free, so it suits skin that reacts easily.' } },
+      { id: 'uncover-green-tea', name: 'Uncover Green Tea Cleanser', brand: 'Uncover', price: 1850, step: 'cleanser', skin: ['oily', 'combination', 'normal'], concerns: ['oiliness', 'acne', 'breakouts', 'pores'], gentle: false, ingredients: ['green tea'], keys: ['green tea cleanser', 'uncover green'], brandKeys: ['uncover'],
+        reason: 'Lifts excess oil and leaves skin feeling fresh, not tight.',
+        reasonFor: { acne: 'Clears away the oil that can lead to breakouts, without harsh scrubbing.', breakouts: 'Clears away the oil that can lead to breakouts, without harsh scrubbing.' } },
+      { id: 'cosrx-low-ph', name: 'COSRX Low pH Cleanser', brand: 'COSRX', price: 1999, step: 'cleanser', skin: ['dry', 'oily', 'combination', 'normal'], concerns: ['sensitivity', 'breakouts', 'texture', 'basic'], gentle: true, ingredients: ['tea tree'], keys: ['low ph', 'good morning'], brandKeys: ['cosrx'],
+        reason: 'A low pH gel cleanser that cleans well while staying kind to your skin barrier.',
+        reasonFor: { breakouts: 'Mild enough for twice-daily use and helps keep skin clear between breakouts.' } },
+      { id: 'cosrx-salicylic', name: 'COSRX Salicylic Cleanser', brand: 'COSRX', price: 2000, step: 'cleanser', skin: ['oily', 'combination'], concerns: ['acne', 'breakouts', 'pores', 'texture', 'oiliness'], gentle: false, ingredients: ['salicylic acid'], keys: ['salicylic cleanser', 'cosrx salicylic', 'salicylic acid daily'], brandKeys: ['cosrx'],
+        reason: 'Salicylic acid works inside pores to help clear congestion and breakouts.',
+        reasonFor: { pores: 'Salicylic acid helps clear the build-up that makes pores look larger.', texture: 'Salicylic acid gently loosens the build-up behind rough, bumpy texture.' } },
+      { id: 'ordinary-squalane-cleanser', name: 'The Ordinary Squalane Cleanser', brand: 'The Ordinary', price: 2200, step: 'cleanser', skin: ['dry', 'normal'], concerns: ['dryness', 'sensitivity', 'lines', 'ageing'], gentle: true, ingredients: ['squalane'], keys: ['squalane cleanser'], brandKeys: ['the ordinary', 'ordinary'],
+        reason: 'A balm-to-oil cleanser that removes sunscreen and leaves dry skin soft, not tight.' },
+      { id: 'neutrogena-hb-cleanser', name: 'Neutrogena Hydro Boost Cleanser', brand: 'Neutrogena', price: 2200, step: 'cleanser', skin: ['dry', 'normal', 'combination'], concerns: ['dryness', 'tone'], gentle: false, ingredients: ['hyaluronic acid'], keys: ['hydro boost cleanser', 'hydroboost cleanser'], brandKeys: ['neutrogena'],
+        reason: 'A hydrating gel cleanser with hyaluronic acid that cleans without that tight feeling.' },
+
+      { id: 'simple-moisturiser', name: 'Simple Moisturiser', brand: 'Simple', price: 1200, step: 'moisturiser', skin: ['dry', 'normal', 'combination'], concerns: ['basic', 'sensitivity'], gentle: true, ingredients: [], keys: ['simple moisturiser', 'simple moisturizer', 'simple hydrating', 'simple kind'], brandKeys: [],
+        reason: 'A light, simple moisturiser with no added perfume. A gentle everyday choice.' },
+      { id: 'cc-dual-action', name: 'Clean & Clear Dual Action Moisturiser', brand: 'Clean & Clear', price: 1200, step: 'moisturiser', skin: ['oily', 'combination'], concerns: ['acne', 'breakouts', 'oiliness'], gentle: false, ingredients: ['salicylic acid'], keys: ['dual action'], brandKeys: ['clean & clear', 'clean and clear', 'clean&clear'],
+        reason: 'An oil-free moisturiser with salicylic acid that hydrates while helping prevent breakouts.' },
+      { id: 'zelaton-gel', name: 'Zelaton Oil Free Moisturising Gel', brand: 'Zelaton', price: 1650, step: 'moisturiser', skin: ['oily', 'combination', 'normal'], concerns: ['oiliness', 'pores', 'acne', 'breakouts'], gentle: false, ingredients: [], keys: ['zelaton'], brandKeys: ['zelaton'],
+        reason: 'A light, oil-free gel that hydrates without adding shine.' },
+      { id: 'uncover-argan', name: 'Uncover Argan Hydrating Moisturiser', brand: 'Uncover', price: 1999, step: 'moisturiser', skin: ['dry', 'normal'], concerns: ['dryness', 'lines', 'ageing', 'tone'], gentle: false, ingredients: ['argan oil'], keys: ['argan'], brandKeys: ['uncover'],
+        reason: 'A richer cream with argan oil that softens and comforts dry skin.' },
+      { id: 'isntree-ha-cream', name: 'Isntree Hyaluronic Acid Moist Cream', brand: 'Isntree', price: 2600, step: 'moisturiser', skin: ['dry', 'normal', 'combination'], concerns: ['dryness', 'sensitivity', 'lines', 'ageing', 'texture'], gentle: true, ingredients: ['hyaluronic acid'], keys: ['isntree'], brandKeys: ['isntree'],
+        reason: 'Hyaluronic acid draws water into the skin to keep it plump and comfortable.',
+        reasonFor: { lines: 'Keeping skin well hydrated softens the look of fine lines.', ageing: 'Keeping skin well hydrated softens the look of fine lines.' } },
+      { id: 'neutrogena-water-gel', name: 'Neutrogena Hydro Boost Water Gel', brand: 'Neutrogena', price: 2750, step: 'moisturiser', skin: ['oily', 'combination', 'normal'], concerns: ['dryness', 'oiliness', 'pores', 'texture'], gentle: false, ingredients: ['hyaluronic acid'], keys: ['water gel', 'hydro boost gel', 'hydro boost water', 'hydroboost water'], brandKeys: ['neutrogena'],
+        reason: 'A water-light gel that hydrates thirsty skin without feeling heavy or greasy.' },
+      { id: 'ordinary-nmf', name: 'The Ordinary Natural Moisturising Factors + HA', brand: 'The Ordinary', price: 3500, step: 'moisturiser', skin: ['dry', 'oily', 'combination', 'normal'], concerns: ['dryness', 'sensitivity', 'texture', 'lines', 'ageing'], gentle: true, ingredients: ['hyaluronic acid'], keys: ['natural moisturising', 'natural moisturizing', 'nmf'], brandKeys: ['the ordinary', 'ordinary'],
+        reason: 'Mirrors the moisturising factors your skin makes itself, to support a healthy barrier.' },
+
+      { id: 'cosrx-spf', name: 'COSRX SPF50+', brand: 'COSRX', price: 2000, step: 'sunscreen', skin: ['oily', 'combination', 'normal'], concerns: ['oiliness', 'acne', 'breakouts', 'marks', 'tone'], gentle: false, ingredients: [], keys: ['cosrx spf', 'cosrx sun'], brandKeys: ['cosrx'],
+        reason: 'A light SPF50+ that sits comfortably on oilier skin.',
+        reasonFor: { marks: 'A light SPF50+ for oilier skin. Daily sunscreen stops dark marks from getting darker.', tone: 'A light SPF50+ for oilier skin. Daily sunscreen helps even out skin tone over time.' } },
+      { id: 'apieu-spf', name: 'A’PIEU SPF50+', brand: 'A’PIEU', price: 2000, step: 'sunscreen', skin: ['dry', 'oily', 'combination', 'normal'], concerns: ['basic', 'marks', 'tone'], gentle: false, ingredients: [], keys: ["a'pieu", 'apieu', 'a pieu'], brandKeys: ["a'pieu", 'apieu', 'a pieu'],
+        reason: 'An affordable everyday SPF50+ for daily protection.',
+        reasonFor: { marks: 'Affordable daily SPF50+. Sun protection stops dark marks from getting darker.', tone: 'Affordable daily SPF50+. Sun protection helps even out skin tone over time.' } },
+      { id: 'black-girl-kids-spf', name: 'Black Girl Kids SPF50', brand: 'Black Girl', price: 2300, step: 'sunscreen', skin: ['dry', 'oily', 'combination', 'normal'], concerns: ['sensitivity', 'marks', 'tone'], gentle: true, ingredients: [], keys: ['black girl'], brandKeys: ['black girl'],
+        reason: 'A gentle SPF50 that blends into deeper skin tones without a white cast.',
+        reasonFor: { marks: 'A gentle SPF50 with no white cast on deeper skin. Daily sunscreen stops dark marks from getting darker.' } },
+      { id: 'joseon-spf', name: 'Beauty of Joseon SPF50', brand: 'Beauty of Joseon', price: 2600, step: 'sunscreen', skin: ['dry', 'normal', 'combination'], concerns: ['marks', 'tone', 'ageing', 'lines', 'dryness'], gentle: false, ingredients: [], keys: ['joseon', 'relief sun'], brandKeys: ['joseon'],
+        reason: 'A hydrating SPF50 that feels like a light cream.',
+        reasonFor: { marks: 'A hydrating SPF50. Wearing sunscreen every morning stops dark marks from getting darker.', tone: 'A hydrating SPF50. Daily sun protection helps even out skin tone over time.', ageing: 'A hydrating SPF50. Daily sun protection is the most proven step against visible ageing.', lines: 'A hydrating SPF50. Daily sun protection is the most proven step against fine lines.' } }
+    ];
+  }
+  bConcerns() {
+    return [['basic', 'I need a basic skincare routine'], ['acne', 'Acne'], ['breakouts', 'Breakouts'], ['marks', 'Dark marks'], ['tone', 'Uneven skin tone'], ['dryness', 'Dryness'], ['oiliness', 'Oiliness'], ['pores', 'Visible pores'], ['texture', 'Texture'], ['lines', 'Fine lines'], ['ageing', 'Ageing'], ['sensitivity', 'Sensitivity']];
+  }
+  bInit() { return { step: 'q1', hist: [], has: '', skin: '', sug: '', sk: ['', '', '', ''], concerns: [], current: '', none: false, react: '', reactText: '', budget: '' }; }
+  bState() { return this.state.b || this.bInit(); }
+  bSet(patch) { this.setState(st => ({ b: { ...(st.b || this.bInit()), ...patch } })); }
+  bGo(step, patch = {}) { const b = this.bState(); this.setState({ b: { ...b, ...patch, step, hist: [...b.hist, b.step] } }); window.scrollTo({ top: 0 }); }
+  bBack() {
+    const b = this.bState();
+    if (!b.hist.length) return this.go('home');
+    this.setState({ b: { ...b, step: b.hist[b.hist.length - 1], hist: b.hist.slice(0, -1) } }); window.scrollTo({ top: 0 });
+  }
+  kes(n) { return 'KES ' + Math.round(n).toLocaleString('en-US'); }
+  skinSuggest(sk) {
+    const counts = {}; sk.forEach(t => { if (t) counts[t] = (counts[t] || 0) + 1; });
+    const order = [sk[0], 'combination', 'oily', 'dry', 'normal'].filter((t, i, a) => t && a.indexOf(t) === i);
+    return order.reduce((best, t) => ((counts[t] || 0) > (counts[best] || 0) ? t : best), order[0]);
+  }
+
+  buildRoutine(b) {
+    const P = this.routineProducts();
+    const skin = b.skin === 'notsure' ? b.sug : b.skin;
+    const C = b.concerns;
+    const norm = t => ' ' + (t || '').toLowerCase().replace(/[’‘`]/g, "'").replace(/\s+/g, ' ') + ' ';
+    const reactT = b.react === 'yes' ? norm(b.reactText) : '';
+    const curT = b.none ? '' : norm(b.current);
+    const INGR = [['salicylic', 'salicylic acid'], [' bha', 'salicylic acid'], ['tea tree', 'tea tree'], ['hyaluronic', 'hyaluronic acid'], [' ha ', 'hyaluronic acid'], ['argan', 'argan oil'], ['squalane', 'squalane'], ['green tea', 'green tea']];
+    const reactedIngr = new Set(INGR.filter(([k]) => reactT.includes(k)).map(([, v]) => v));
+    const avoided = new Set();
+    const excluded = p => {
+      let hit = false;
+      p.ingredients.forEach(i => { if (reactedIngr.has(i)) { hit = true; avoided.add(i); } });
+      if (p.keys.some(k => reactT.includes(k))) { hit = true; avoided.add(p.name); }
+      if (p.brandKeys.some(k => reactT.includes(k))) { hit = true; avoided.add(p.brand); }
+      return hit;
+    };
+    const careful = C.includes('sensitivity') || b.react === 'yes';
+    const acneish = C.includes('acne') || C.includes('breakouts');
+    const score = p => {
+      let sc = p.skin.includes(skin) ? 3 : -4;
+      C.forEach(c => { if (p.concerns.includes(c)) sc += c === 'basic' ? 1 : 2; });
+      if (careful && p.gentle) sc += 2;
+      if (p.ingredients.includes('salicylic acid') && !acneish && (careful || skin === 'dry')) sc -= 3;
+      return sc;
+    };
+    const STEPS = [['cleanser', 'Cleanser', 'Morning and evening'], ['moisturiser', 'Moisturiser', 'Morning and evening'], ['sunscreen', 'Sunscreen', 'Every morning']];
+    const missing = [];
+    const slots = [];
+    STEPS.forEach(([id, label, when]) => {
+      const ok = P.filter(p => p.step === id && !excluded(p));
+      const kept = ok.find(p => p.skin.includes(skin) && p.keys.some(k => curT.includes(k)));
+      let cands = kept ? [kept] : ok.filter(p => p.skin.includes(skin));
+      if (!cands.length) cands = ok;
+      if (!cands.length) { missing.push(label.toLowerCase()); return; }
+      slots.push({ id, label, when, cands, kept: kept ? kept.id : '' });
+    });
+    const B = parseInt(b.budget, 10) || 0;
+    let best = null, minTotal = Infinity;
+    const walk = (i, picks) => {
+      if (i === slots.length) {
+        const total = picks.reduce((a, p, j) => a + (slots[j].kept === p.id ? 0 : p.price), 0);
+        const sc = picks.reduce((a, p) => a + score(p), 0);
+        const over = B ? Math.max(0, total - (B + 500)) : 0;
+        const under = B ? Math.max(0, (B - 500) - total) : 0;
+        const obj = sc - over / 40 - under / 600;
+        minTotal = Math.min(minTotal, total);
+        if (!best || obj > best.obj || (obj === best.obj && total < best.total)) best = { obj, total, picks };
+        return;
+      }
+      slots[i].cands.forEach(p => walk(i + 1, [...picks, p]));
+    };
+    walk(0, []);
+    const picks = best ? best.picks : [];
+    const total = best ? best.total : 0;
+    const items = picks.map((p, j) => {
+      const s = slots[j]; const kept = s.kept === p.id;
+      const key = C.find(c => p.reasonFor && p.reasonFor[c]) || (p.reasonFor && p.reasonFor[skin] ? skin : '');
+      return { n: '0' + (j + 1), stepLabel: s.label, when: s.when, name: p.name, price: p.price, kept,
+        priceLabel: kept ? 'Already have' : this.kes(p.price), reason: key ? p.reasonFor[key] : p.reason };
+    });
+    return { skin, items, total, budget: B, minTotal, missing, avoided: [...avoided] };
+  }
+
+  buildVals() {
+    const b = this.bState();
+    const G = '#1F6B49', PAPER = '#FFFDFA', INK = '#23221F';
+    const TYPES = { dry: 'Dry', oily: 'Oily', combination: 'Combination', normal: 'Normal', notsure: 'Not sure' };
+    const SKT = ['dry', 'normal', 'oily', 'combination'];
+    const SK = [
+      { q: 'After washing your face and applying nothing, how does your skin usually feel after about 30 minutes?', opts: ['Tight, dry or uncomfortable', 'Comfortable and balanced', 'Oily or shiny', 'My forehead, nose or chin feels oily, but other areas feel normal or dry'] },
+      { q: 'By the middle of the day, what usually happens to your skin?', opts: ['It still feels dry or sometimes flaky', 'It mostly feels the same', 'Most of my face becomes shiny', 'Mainly my forehead, nose and chin become shiny'] },
+      { q: 'Which description sounds most like your face?', opts: ['My skin often needs moisturiser because it feels dry', 'My skin generally feels comfortable', 'My skin becomes oily quite easily', 'Different parts of my face behave differently'] },
+      { q: 'Where do you usually notice the most oil?', opts: ['I rarely notice much oil', 'A little oil, but nothing significant', 'Across most of my face', 'Mostly around my forehead, nose and chin'] }
+    ];
+    const SKIN_DESC = {
+      dry: 'Your skin tends to feel tight and often needs extra moisture. Gentle, hydrating products will suit it best.',
+      oily: 'Your skin makes more oil, so it becomes shiny easily. Light, oil-free products will suit it best.',
+      combination: 'Your forehead, nose and chin get oily while other areas stay normal or dry. Light, balancing products will suit it best.',
+      normal: 'Your skin is mostly balanced and comfortable. A simple, gentle routine is all it needs.'
+    };
+    const MAIN = {
+      q1: { title: 'Do you currently have a skincare routine?', field: 'has', opts: [['yes', 'Yes'], ['no', 'No']] },
+      q2: { title: 'Do you know your skin type?', field: 'skin', opts: [['dry', 'Dry'], ['oily', 'Oily'], ['combination', 'Combination'], ['normal', 'Normal'], ['notsure', 'Not sure']] },
+      q5: { title: 'Have you reacted badly to any skincare products before?', field: 'react', opts: [['yes', 'Yes'], ['no', 'No']] }
+    };
+    const set = patch => this.bSet(patch);
+    const opt = (label, on, onClick) => ({ label, onClick, pressed: on ? 'true' : 'false', bg: on ? G : PAPER, fg: on ? PAPER : INK, tick: on ? '1' : '0' });
+    const step = b.step;
+    const mainNum = { q1: 1, q2: 2, q3: 3, q4: 4, q5: 5, q6: 6 }[step] || 0;
+    const skNum = { sk1: 1, sk2: 2, sk3: 3, sk4: 4 }[step] || 0;
+    let count = '', title = '', help = '', opts = [], progress = 0, kind = '';
+    if (mainNum) { count = 'Question ' + mainNum + ' of 6'; progress = mainNum / 6; }
+    if (skNum) { count = 'Find your skin type · Question ' + skNum + ' of 4'; progress = skNum / 4; }
+    if (MAIN[step]) {
+      const q = MAIN[step]; kind = 'single'; title = q.title;
+      opts = q.opts.map(([v, l]) => opt(l, b[q.field] === v, () => set({ [q.field]: v })));
+      if (step === 'q2') help = 'Not sure is a perfectly good answer. We can help you work it out.';
+    }
+    if (skNum) {
+      const q = SK[skNum - 1]; kind = 'single'; title = q.q;
+      opts = q.opts.map((l, i) => opt(l, b.sk[skNum - 1] === SKT[i], () => this.setState(st => { const bb = st.b || this.bInit(); const sk = [...bb.sk]; sk[skNum - 1] = SKT[i]; return { b: { ...bb, sk } }; })));
+    }
+    if (step === 'skres') { kind = 'skres'; count = 'Find your skin type · Your result'; progress = 1; help = SKIN_DESC[b.sug] || ''; }
+    const concernOpts = this.bConcerns().map(([v, l]) => opt(l, b.concerns.includes(v), () => this.setState(st => {
+      const bb = st.b || this.bInit(); const on = bb.concerns.includes(v);
+      return { b: { ...bb, concerns: on ? bb.concerns.filter(x => x !== v) : [...bb.concerns, v] } };
+    })));
+    if (step === 'q3') { kind = 'multi'; title = 'What would you like help with?'; help = 'Choose as many as you like.'; }
+    if (step === 'q4') { kind = 'text'; title = 'What do you currently use on your skin?'; help = 'List any products you use now, even if you are not sure of the exact names.'; }
+    if (step === 'q6') { kind = 'budget'; title = 'About how much would you be comfortable spending on your routine?'; }
+    const budgetNum = parseInt(b.budget, 10) || 0;
+    const can = {
+      q1: !!b.has, q2: !!b.skin, q3: b.concerns.length > 0, q4: b.none || !!b.current.trim(), q5: !!b.react, q6: budgetNum > 0,
+      sk1: !!b.sk[0], sk2: !!b.sk[1], sk3: !!b.sk[2], sk4: !!b.sk[3], skres: !!b.sug
+    }[step];
+    const hints = { q1: 'Choose an answer to continue.', q2: 'Choose an answer to continue.', q5: 'Choose an answer to continue.', sk1: 'Choose an answer to continue.', sk2: 'Choose an answer to continue.', sk3: 'Choose an answer to continue.', sk4: 'Choose an answer to continue.', q3: 'Choose at least one to continue.', q4: 'Tell us what you use, or choose “I don’t currently use anything”.', q6: 'Enter an approximate amount to continue.' };
+    const needQuiz = step === 'q2' && b.skin === 'notsure' && !b.sug;
+    let nextLabel = 'Continue';
+    if (needQuiz) nextLabel = 'Help me find my skin type';
+    if (step === 'skres') nextLabel = 'Continue building my routine';
+    if (step === 'q6') nextLabel = 'Build my routine';
+    const next = () => {
+      if (!can) return;
+      if (step === 'q1') return this.bGo('q2');
+      if (step === 'q2') return this.bGo(b.skin === 'notsure' && !b.sug ? 'sk1' : 'q3');
+      if (skNum && skNum < 4) return this.bGo('sk' + (skNum + 1));
+      if (step === 'sk4') return this.bGo('skres', { sug: this.skinSuggest(b.sk) });
+      if (step === 'skres') return this.bGo('q3');
+      const order = ['q3', 'q4', 'q5', 'q6', 'result'];
+      const i = order.indexOf(step); if (i >= 0) this.bGo(order[i + 1]);
+    };
+    const hasAlt = step === 'q2' && b.skin === 'notsure' && !!b.sug;
+    const sugOpts = SKT.map(t => opt(TYPES[t], b.sug === t, () => set({ sug: t })));
+
+    // result
+    const R = step === 'result' ? this.buildRoutine(b) : null;
+    let rv = {};
+    if (R) {
+      const labels = Object.fromEntries(this.bConcerns());
+      const named = b.concerns.filter(c => c !== 'basic').map(c => labels[c].toLowerCase());
+      const list = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+      const summary = named.length ? 'Focused on ' + list(named) + '. Three steps, kept simple: cleanse, moisturise and protect.' : 'Three steps to cover the basics: cleanse, moisturise and protect.';
+      const notes = [];
+      if (b.has === 'yes') notes.push('You already have a routine. Use this to fill any gaps, or to replace products that are not working for you.');
+      if (R.items.some(i => i.kept)) notes.push('Products you already use stay in your routine and are not added to your total.');
+      if (R.avoided.length) notes.push('We left out products that match what you reacted to: ' + list(R.avoided) + '.');
+      if (b.react === 'yes') notes.push('Patch test each new product on your jaw for 48 hours, and introduce one product at a time.');
+      else if (b.concerns.includes('sensitivity')) notes.push('Introduce one new product at a time so you can see how your skin responds.');
+      if (R.missing.length) notes.push('We could not find a ' + list(R.missing) + ' that avoids what you reacted to. Our team can suggest one in a consultation.');
+      if (b.concerns.some(c => ['acne', 'breakouts', 'marks', 'tone', 'lines', 'ageing', 'texture'].includes(c))) notes.push('These essentials are the base for any treatment. For targeted help with your concerns, a therapist can add the right treatment step.');
+      let b1 = '', b2 = '';
+      const B = R.budget, T = R.total;
+      if (B) {
+        if (T === B) b1 = 'This routine matches your budget of ' + this.kes(B) + '.';
+        else {
+          b1 = 'You wanted to spend about ' + this.kes(B) + '. This routine comes to ' + this.kes(T) + '.';
+          if (Math.abs(T - B) <= 500) b2 = 'That is within KES 500 of your budget.';
+          else if (T > B) b2 = T === R.minTotal ? 'This is the lowest-cost routine we can build that still covers cleansing, moisturising and sun protection.' : 'These are the closest products to your budget that still suit your skin.';
+          else b2 = 'These are the products that suit your skin best, so there was no need to spend more.';
+        }
+      }
+      const newCount = R.items.filter(i => !i.kept).length;
+      const stepsIn = R.items.map(i => i.stepLabel);
+      rv = {
+        brHeadline: 'A simple routine for ' + TYPES[R.skin].toLowerCase() + ' skin',
+        brSummary: summary,
+        brChips: [TYPES[R.skin] + ' skin', ...b.concerns.map(c => labels[c])],
+        brItems: R.items, brHasItems: R.items.length > 0,
+        brAm: stepsIn, brPm: stepsIn.filter(s => s !== 'Sunscreen'),
+        brTotalLabel: this.kes(T),
+        brHasBudgetMsg: !!b1, brBudget1: b1, brBudget2: b2, brHasBudget2: !!b2,
+        brNotes: notes, brHasNotes: notes.length > 0,
+        brAdd: () => newCount ? this.add(newCount, 'Your routine (' + newCount + (newCount === 1 ? ' product)' : ' products)')) : this.toast('You already have everything in this routine')
+      };
+    }
+
+    return {
+      bAsking: step !== 'result', bIsResult: step === 'result',
+      bBack: () => this.bBack(), bBackLabel: b.hist.length ? '← Back' : '✕ Exit',
+      bProgress: Math.round(progress * 100) + '%', bCount: count, bTitle: title, bHelp: help, bHasHelp: !!help,
+      bIsSingle: kind === 'single', bIsMulti: kind === 'multi', bIsText: kind === 'text', bIsBudget: kind === 'budget', bIsSkinRes: kind === 'skres', bNotSkinRes: kind !== 'skres',
+      bOpts: opts, bConcernOpts: concernOpts, bSugOpts: sugOpts, bSugLabel: TYPES[b.sug] || '', bSugLower: (TYPES[b.sug] || '').toLowerCase(),
+      bShowSugNote: step === 'q2' && b.skin === 'notsure' && !!b.sug,
+      bShowReact: step === 'q5' && b.react === 'yes',
+      bReactText: b.reactText, bOnReact: e => set({ reactText: e.target.value }),
+      bShowCurrentBox: !b.none, bCurrent: b.current, bOnCurrent: e => set({ current: e.target.value }),
+      bNonePressed: b.none ? 'true' : 'false', bNoneBg: b.none ? G : PAPER, bNoneFg: b.none ? PAPER : INK, bNoneTick: b.none ? '1' : '0',
+      bToggleNone: () => this.setState(st => { const bb = st.b || this.bInit(); return { b: { ...bb, none: !bb.none } }; }),
+      bBudgetStr: budgetNum ? budgetNum.toLocaleString('en-US') : '', bOnBudget: e => set({ budget: e.target.value.replace(/[^0-9]/g, '').slice(0, 7) }),
+      bNext: next, bNextLabel: nextLabel, bNextDisabled: can ? 'false' : 'true', bNextBg: can ? G : '#C9C2B6', bNextCursor: can ? 'pointer' : 'not-allowed',
+      bShowHint: !can && !!hints[step], bHint: hints[step] || '',
+      bHasAlt: hasAlt, bAlt: () => this.bGo('sk1'), bAltLabel: 'Answer the skin type questions again',
+      bChange: () => { this.bSet({ step: 'q1', hist: [] }); window.scrollTo({ top: 0 }); },
+      bRestart: () => { this.setState({ b: this.bInit() }); window.scrollTo({ top: 0 }); },
+      ...rv
+    };
   }
 
   renderVals() {
@@ -3308,10 +3747,10 @@ class Component extends DCLogic {
     const socials = ['Instagram', 'TikTok', 'Facebook', 'YouTube'];
 
     return {
-      ...s, showPhotos, journeyCols: s.mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(4,minmax(0,1fr))', proCols: s.mobile ? 'minmax(0,1fr)' : 'minmax(0,5fr) minmax(0,6fr)', pickCols: s.mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(3,minmax(0,1fr))', productCols: s.mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(4,minmax(0,1fr))', concernCols: s.mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(6,minmax(0,1fr))', showImg: showPhotos && !s.mobile, desktop: !s.mobile, mobile: s.mobile,
-      isHome: s.page === 'home', isNew: s.page === 'new', isQuiz: s.page === 'quiz', isConcern: s.page === 'concern', isRoutine: s.page === 'routine', isShop: s.page === 'shop', isPro: s.page === 'pro',
+      ...s, ...this.buildVals(), showPhotos, journeyCols: s.mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(4,minmax(0,1fr))', proCols: s.mobile ? 'minmax(0,1fr)' : 'minmax(0,5fr) minmax(0,6fr)', pickCols: s.mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(3,minmax(0,1fr))', productCols: s.mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(4,minmax(0,1fr))', concernCols: s.mobile ? 'repeat(2,minmax(0,1fr))' : 'repeat(6,minmax(0,1fr))', showImg: showPhotos && !s.mobile, desktop: !s.mobile, mobile: s.mobile,
+      isHome: s.page === 'home', isBuild: s.page === 'build', isNew: s.page === 'new', isQuiz: s.page === 'quiz', isConcern: s.page === 'concern', isRoutine: s.page === 'routine', isShop: s.page === 'shop', isPro: s.page === 'pro',
       cartCount: s.cart, hasCart: s.cart > 0, hasToast: !!s.toast,
-      goHome: go('home'), goNew: go('new'), goQuiz: () => this.go('quiz', { quizStep: 0, quizAns: {} }), goConcern: go('concern'), goRoutine: go('routine'),
+      goHome: go('home'), goNew: go('new'), goQuiz: () => this.go('quiz', { quizStep: 0, quizAns: {} }), goConcern: go('concern'), goRoutine: go('routine'), goBuild: () => { const bb = this.bState(); this.setState({ b: { ...bb, step: 'q1', hist: [] } }); this.go('build'); },
       goShop: go('shop', { shopGroup: 'Product type', shopVal: 'All', shopQuery: '' }, 'care'), goShopBrands: go('shop', { shopGroup: 'Brand', shopVal: 'All', shopQuery: '' }, 'care'),
       goShopBest: go('shop', { shopGroup: 'Product type', shopVal: 'All', shopQuery: '' }, 'care'),
       goPro: go('pro', {}, 'consult'), goAnalysis: go('pro', { proService: 'analysis' }, 'consult'), goVirtual: go('pro', { proService: 'virtual' }, 'consult'), goClinic: go('pro', { proService: 'clinic' }, 'consult'),
